@@ -1,0 +1,7 @@
+=begin sbml
+
+=object web: id=web.downsub, javascript-bridge="__$_bridge", uses-browser-user-agent=yes, \
+            script-when-loaded=YouTubeSubtitleDownloader__on_web_loaded, \
+            script-when-start=YouTubeSubtitleDownloader__on_web_start
+
+=end sbml
