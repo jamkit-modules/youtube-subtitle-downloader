@@ -4,7 +4,7 @@ YouTubeSubtitleDownloader = (function() {
     }
 })();
 
-YouTubeSubtitleDownloader.webjs = require("webjs-helper").initialize("web.downsub", "__$_bridge");
+YouTubeSubtitleDownloader.webjs = require("webjs-helper").initialize("YouTubeSubtitleDownloader.web", "__$_bridge");
 YouTubeSubtitleDownloader.srt   = require("srt-parser");
 
 YouTubeSubtitleDownloader.initialize = function(id) {
@@ -24,7 +24,7 @@ YouTubeSubtitleDownloader.download = function(video_id) {
 
         self._callback = [ resolve, reject ]
 
-        view.object("web.downsub").property({ "url":url })
+        view.object("YouTubeSubtitleDownloader.web").property({ "url":url })
     })
 }
 
@@ -34,7 +34,7 @@ YouTubeSubtitleDownloader.on_web_loaded = function(data) {
         this.webjs.call("downloadSubtitle").then(function(result) {
             /* Do nothing */
         }, function(error) {
-            console.log(JSON.stringify(error))
+            console.log(JSON.stringify(error));
         })
 
         return
@@ -48,13 +48,13 @@ YouTubeSubtitleDownloader.on_web_start = function(data) {
         fetch(data["url"]).then(function(response) {
             if (response.ok) {
                 response.text().then(function(text) {
-                    self._callback[0](self.srt.parse(text))
+                    self._callback[0](self.srt.parse(text));
                 })
             } else {
-                self._callback[1]({ "status":response.status })
+                self._callback[1]({ "status":response.status });
             }
         }, function(error) {
-            self._callback[1](error)
+            self._callback[1](error);
         })
 
         return
