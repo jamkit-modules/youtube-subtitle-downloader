@@ -47,7 +47,7 @@ var module = (function() {
                     console.log(JSON.stringify(error));
                 })
         
-                return
+                return;
             }
         },
         
@@ -65,7 +65,7 @@ var module = (function() {
                     _callback[1](error);
                 })
         
-                return
+                return;
             }
         },
     }
