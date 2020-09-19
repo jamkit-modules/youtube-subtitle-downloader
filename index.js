@@ -8,8 +8,6 @@ var module = (function() {
         initialize: function(id) {
             var self = this;
 
-            webjs.initialize(id + ".web", "__$_bridge");
-
             global[id.replace(".", "_") + "__on_web_loaded"] = function (data) {
                 self.on_web_loaded(data);
             }
@@ -18,11 +16,12 @@ var module = (function() {
                 self.on_web_start(data);
             }
 
+            webjs.initialize(id + ".web", "__$_bridge");
             view.object(id).action("load", { 
                 "filename":this.__ENV__["dir-path"] + "/" + "web.sbml",
                 "web-id":id, 
                 "web-prefix":id.replace(".", "_")
-            })
+            });
 
             _id = id;
 
