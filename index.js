@@ -6,14 +6,16 @@ var module = (function() {
 
     return {
         initialize: function(id) {
+            var self = this;
+
             webjs.initialize(id + ".web", "__$_bridge");
 
             global[id.replace(".", "_") + "__on_web_loaded"] = function (data) {
-                this.on_web_loaded(data);
+                self.on_web_loaded(data);
             }
 
             global[id.replace(".", "_") + "__on_web_start"] = function (data) {
-                this.on_web_start(data);
+                self.on_web_start(data);
             }
 
             view.object(id).action("load", { 
