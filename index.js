@@ -18,7 +18,7 @@ var module = (function() {
 
             webjs.initialize(id + ".web", "__$_bridge");
             view.object(id).action("load", { 
-                "filename":this.__ENV__["dir-path"] + "/" + "web.sbml",
+                "filename":this.__ENV__["dir-path"] + "/web.sbml",
                 "web-id":id, 
                 "web-prefix":id.replace(".", "_")
             });
@@ -41,7 +41,7 @@ var module = (function() {
         
         on_web_loaded: function(data) {
             if (data["url"].startsWith("https://downsub.com")) {
-                webjs.import(this.__ENV__["dir-path"] + "/" + "downsub.js")
+                webjs.import(this.__ENV__["dir-path"] + "/downsub.js");
                 webjs.call("downloadSubtitle").then(function(result) {
                     /* Do nothing */
                 }, function(error) {
