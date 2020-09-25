@@ -2,6 +2,7 @@
 
 =object web: id=${web-id}.web, javascript-bridge="__$_bridge", uses-browser-user-agent=yes, \
             script-when-loaded=${web-prefix}__on_web_loaded, \
-            script-when-start=${web-prefix}__on_web_start
+            script-when-start=${web-prefix}__on_web_start, \
+            style=web
 
 =end sbml
