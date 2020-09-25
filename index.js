@@ -6,13 +6,14 @@ var module = (function() {
 
     return {
         initialize: function(id) {
+            var web_prefix = id.replace(".", "_");
             var self = this;
 
-            global[id.replace(".", "_") + "__on_web_loaded"] = function (data) {
+            global[web_prefix + "__on_web_loaded"] = function (data) {
                 self.on_web_loaded(data);
             }
 
-            global[id.replace(".", "_") + "__on_web_start"] = function (data) {
+            global[web_prefix + "__on_web_start"] = function (data) {
                 self.on_web_start(data);
             }
 
@@ -20,7 +21,7 @@ var module = (function() {
             view.object(id).action("load", { 
                 "filename":this.__ENV__["dir-path"] + "/web.sbml",
                 "web-id":id, 
-                "web-prefix":id.replace(".", "_")
+                "web-prefix":web_prefix
             });
 
             _id = id;
