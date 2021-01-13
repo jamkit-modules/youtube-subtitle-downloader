@@ -1,17 +1,17 @@
 function downloadSubtitle(onResult, onError) {
-    _downloadSubtitle(onResult, onError)   
+    _downloadSubtitle(onResult, onError); 
 }
 
 function _downloadSubtitle(onResult, onError) {
-    var downloadButtons = document.getElementsByClassName('download-button')
+    var downloadButtons = document.getElementsByClassName('download-button');
 
     if (downloadButtons.length == 0) {
         setTimeout(function() {
-            _downloadSubtitle(onResult, onError)
-        }, 1000)
+            _downloadSubtitle(onResult, onError);
+        }, 1000);
     } else {
-        downloadButtons[0].click()
+        downloadButtons[0].click();
 
-        onResult()
+        onResult();
     }
 }
