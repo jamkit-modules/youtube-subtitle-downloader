@@ -2,9 +2,8 @@ var module = (function() {
     const webjs = require("webjs-helper"),
           srt   = require("srt-parser");
 
-    var _id = "", _callback = [];
-    var _dir_path = "";
-
+    var _id = "", _dir_path = "", _callback = [];
+    
     function _on_web_loaded(data) {
         if (data["url"].startsWith("https://downsub.com")) {
             webjs.import(_dir_path + "/downsub.js");
@@ -49,7 +48,6 @@ var module = (function() {
             global[web_prefix + "__on_web_loaded"] = function (data) {
                 _on_web_loaded(data);
             }
-
             global[web_prefix + "__on_web_start"] = function (data) {
                 _on_web_start(data);
             }
