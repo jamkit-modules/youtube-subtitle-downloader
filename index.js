@@ -40,6 +40,18 @@ var module = (function() {
         }
     }
 
+    function _get_object(id, handler) {
+        const object = view.object(id);
+
+        if (!object) {
+            timeout(0.1, function() {
+                _get_object(id, handler);
+            });
+        } else {
+            handler(object);
+        }
+    }
+
     return {
         initialize: function(id) {
             var web_prefix = id.replace(".", "_");
@@ -53,10 +65,12 @@ var module = (function() {
             }
 
             webjs.initialize(id + ".web", "__$_bridge");
-            view.object(id).action("load", { 
-                "filename": dir_path + "/web.sbml",
-                "web-id": id, 
-                "web-prefix": web_prefix
+            _get_object(id, function(object) {
+                object.action("load", { 
+                    "filename": dir_path + "/web.sbml",
+                    "web-id": id, 
+                    "web-prefix": web_prefix
+                });
             });
 
             _id = id, _dir_path = dir_path;
