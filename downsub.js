@@ -3,10 +3,10 @@ function downloadSubtitle(onResult, onError) {
 }
 
 function _downloadSubtitle(onResult, onError) {
-    var downloadButtons = document.getElementsByClassName('download-button');
+    const downloadButtons = document.getElementsByClassName("download-button");
 
     if (downloadButtons.length == 0) {
-        setTimeout(function() {
+        setTimeout(() => {
             _downloadSubtitle(onResult, onError);
         }, 1000);
     } else {

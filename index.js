@@ -2,16 +2,14 @@ var module = (function() {
     const webjs = require("webjs-helper"),
           srt   = require("srt-parser");
 
-    var _id = "", _dir_path = "", _callback = [];
+    var _id = "", _dir_path = "";
+    var _callback = [], _options = {};
     
     function _on_web_loaded(data) {
         if (data["url"].startsWith("https://downsub.com")) {
-            webjs.import(_dir_path + "/downsub.js");
+            webjs.import(`${_dir_path}/downsub.js`);
             webjs.call("downloadSubtitle")
-                .then(function(result) {
-                    /* Do nothing */
-                })
-                .catch(function(error) {
+                .catch((error) => {
                     console.log(JSON.stringify(error));
                 });
     
@@ -20,23 +18,35 @@ var module = (function() {
     }
     
     function _on_web_start(data) {
-        if (data["url"].startsWith("https://subtitle.downsub.com")) {
-            fetch(data["url"])
-                .then(function(response) {
-                    if (response.ok) {
-                        return response.text();
+        if (data["url"].startsWith("https://subtitle.downsub.com") || data["url"].startsWith("https://subtitle2.downsub.com")) {
+            Promise.resolve()
+                .then(() => {
+                    if (!_options["url-only"]) {
+                        return fetch(data["url"])
+                            .then((response) => {
+                                if (response.ok) {
+                                    return response.text();
+                                } else {
+                                    return Promise.reject({ "status": response.status });
+                                }
+                            })
+                            .then((text) => {
+                                if (!_options["srt-only"]) {
+                                    return srt.parse(text);
+                                } else {
+                                    return text;
+                                }
+                            });
                     } else {
-                        return Promise.reject({ "status": response.status });
+                        return data["url"];
                     }
                 })
-                .then(function(text) {
-                    _callback[0](srt.parse(text));
+                .then((result) => {
+                    _callback[0](result);
                 })
-                .catch(function(error) {
+                .catch((error) => {
                     _callback[1](error);
                 });
-    
-            return;
         }
     }
 
@@ -54,22 +64,26 @@ var module = (function() {
 
     return {
         initialize: function(id) {
-            var web_prefix = id.replace(".", "_");
-            var dir_path = this.__ENV__["dir-path"];
+            const sbml_prefix = id.replace(".", "_");
+            const dir_path = this.__ENV__["dir-path"];
             
-            global[web_prefix + "__on_web_loaded"] = function (data) {
+            global[`${sbml_prefix}__on_web_loaded`] = function(data) {
+                if (data["is-for-main-frame"] === "yes") {
+                    webjs.initialize(`${id}.web`, "__web_bridge__");
+                }
+                
                 _on_web_loaded(data);
             }
-            global[web_prefix + "__on_web_start"] = function (data) {
+
+            global[`${sbml_prefix}__on_web_start`] = function(data) {
                 _on_web_start(data);
             }
 
-            webjs.initialize(id + ".web", "__$_bridge");
             view.object(id).action("load", { 
-                "filename": dir_path + "/web.sbml",
+                "filename": `${dir_path}/web.sbml`,
                 "dir-path": dir_path,
-                "web-id": id, 
-                "web-prefix": web_prefix
+                "sbml-id": id, 
+                "sbml-prefix": sbml_prefix
             });
 
             _id = id, _dir_path = dir_path;
@@ -77,14 +91,15 @@ var module = (function() {
             return this;
         },
         
-        download: function(video_id) {
-            return new Promise(function(resolve, reject) {
-                var youtube_url = "https://www.youtube.com/watch?v=" + video_id;
-                var url = "https://downsub.com/?url=" + encodeURIComponent(youtube_url);
+        download: function(video_id, options = {}) {
+            return new Promise((resolve, reject) => {
+                const youtube_url = `https://www.youtube.com/watch?v=${video_id}`;
+                const url = `https://downsub.com/?url=${encodeURIComponent(youtube_url)}`;
         
                 _callback = [ resolve, reject ];
+                _options = options;
         
-                _get_object(_id + ".web", function(object) {
+                _get_object(`${_id}.web`, (object) => {
                     object.property({ "url": url });
                 });
             });

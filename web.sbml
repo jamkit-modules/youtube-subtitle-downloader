@@ -1,9 +1,9 @@
 =begin sbml
 
-=object web: id=${web-id}.web, \
-            javascript-bridge="__$_bridge", uses-browser-user-agent=yes, \
-            script-when-loaded=${web-prefix}__on_web_loaded, \
-            script-when-start=${web-prefix}__on_web_start, \
+=object web: id=${sbml-id}.web, \
+            javascript-bridge="__web_bridge__", uses-browser-user-agent=yes, blocks-image=yes, \
+            script-when-loaded=${sbml-prefix}__on_web_loaded, \
+            script-when-start=${sbml-prefix}__on_web_start, \
             style=web
 
 =end sbml
