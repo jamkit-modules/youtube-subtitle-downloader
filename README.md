@@ -51,9 +51,9 @@ subtitle.download("ArmDp-zijuc")
 
 - **Parameters**:
   - `video_id` (string) - 캡션을 다운로드할 유튜브 비디오의 ID
-  - `options` (DownloadOption, optional) - 캡션 다운로드 시에 적용할 옵션 
+  - `options` (DownloadOptions, optional) - 캡션 다운로드 시에 적용할 옵션 
 
-- **DownloadOption**:
+- **DownloadOptions**:
   - `url-only` (boolean, default=false) - true일 경우, 유튜브 캡션 SRT 파일의 URL을 리턴함.
   - `srt-only` (boolean, default=false) - true일 경우, 유튜브 캡션 SRT 데이터를 리턴함.
 
