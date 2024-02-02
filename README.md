@@ -54,8 +54,8 @@ subtitle.download("ArmDp-zijuc")
   - `options` (DownloadOption, optional) - 캡션 다운로드 시에 적용할 옵션 
 
 - **DownloadOption**:
-  - `url-only` (boolean) - true일 경우, 유튜브 캡션 SRT 파일의 URL을 리턴함.
-  - `srt-only` (boolean) - true일 경우, 유튜브 캡션 SRT 데이터를 리턴함.
+  - `url-only` (boolean, default=false) - true일 경우, 유튜브 캡션 SRT 파일의 URL을 리턴함.
+  - `srt-only` (boolean, default=false) - true일 경우, 유튜브 캡션 SRT 데이터를 리턴함.
 
 - **Returns**: `Promise<Array<Caption> | string>` - 비디오의 각 캡션(`Caption`) 객체의 배열 혹은 문자열(URL, SRT 데이터)을 전달하는 `Promise`
 
