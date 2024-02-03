@@ -33,7 +33,7 @@ subtitle.download("ArmDp-zijuc")
   });
 ```
 
-## Prerequisite
+## Prerequisites
 
 - [webjs-helper](https://github.com/jamkit-modules/webjs-helper) 
 - [srt-parser](https://github.com/jamkit-modules/srt-parser) 
