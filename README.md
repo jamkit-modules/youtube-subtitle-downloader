@@ -25,12 +25,12 @@
 const subtitle = require("youtube-subtitle-downloader").initialize("sbml.youtube");
 
 subtitle.download("ArmDp-zijuc")
-  .then((result) => {
-    ...
-  })
-  .catch((error) => {
-    ...
-  });
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 ```
 
 ## Prerequisites
@@ -57,7 +57,7 @@ subtitle.download("ArmDp-zijuc")
   - `url-only` (boolean, default=false) - true일 경우, 유튜브 캡션 SRT 파일의 URL을 리턴함.
   - `srt-only` (boolean, default=false) - true일 경우, 유튜브 캡션 SRT 데이터를 리턴함.
 
-- **Returns**: `Promise<Array<Caption> | string>` - 비디오의 각 캡션(`Caption`) 객체의 배열 혹은 문자열(URL, SRT 데이터)을 전달하는 `Promise`
+- **Returns**: `Promise<Array<Caption> | string>` - 비디오 캡션(`Caption`) 객체의 배열 혹은 문자열(URL, SRT 데이터)을 전달하는 `Promise`
 
 - **Caption**:
   - `number` (string) - 캡션 번호
